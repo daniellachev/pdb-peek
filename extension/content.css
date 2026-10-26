@@ -1,0 +1,13 @@
+.pdbpeek-id {
+  text-decoration: underline dotted #1bbfe8 !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 3px !important;
+  cursor: help !important;
+  border-radius: 2px;
+}
+
+.pdbpeek-id:hover,
+.pdbpeek-id:focus-visible {
+  background: rgba(27, 191, 232, 0.16) !important;
+  outline: none;
+}

@@ -1,0 +1,74 @@
+{
+  "manifest_version": 3,
+  "name": "PDB Peek: 3D protein previews",
+  "short_name": "PDB Peek",
+  "version": "1.0.0",
+  "description": "Hover a PDB ID in a paper or on Wikipedia to see the structure in 3D, with its method, resolution and source. Free.",
+  "minimum_chrome_version": "111",
+  "homepage_url": "https://animiotics.com/?utm_source=pdb_peek&utm_medium=extension&utm_campaign=pdb_peek",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_title": "PDB Peek",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["contextMenus", "storage", "scripting"],
+  "host_permissions": ["https://*.rcsb.org/*"],
+  "optional_host_permissions": ["http://*/*", "https://*/*"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.wikipedia.org/*",
+        "https://pubmed.ncbi.nlm.nih.gov/*",
+        "https://pmc.ncbi.nlm.nih.gov/*",
+        "https://www.ncbi.nlm.nih.gov/*",
+        "https://europepmc.org/*",
+        "https://*.rcsb.org/*",
+        "https://*.ebi.ac.uk/*",
+        "https://*.uniprot.org/*",
+        "https://*.biorxiv.org/*",
+        "https://*.medrxiv.org/*",
+        "https://*.nature.com/*",
+        "https://*.science.org/*",
+        "https://*.cell.com/*",
+        "https://*.sciencedirect.com/*",
+        "https://elifesciences.org/*",
+        "https://*.plos.org/*",
+        "https://*.frontiersin.org/*",
+        "https://*.mdpi.com/*",
+        "https://*.pnas.org/*",
+        "https://*.acs.org/*",
+        "https://*.wiley.com/*",
+        "https://*.springer.com/*",
+        "https://*.oup.com/*",
+        "https://*.rsc.org/*",
+        "https://*.biomedcentral.com/*",
+        "https://*.embopress.org/*",
+        "https://*.jbc.org/*",
+        "https://*.tandfonline.com/*",
+        "https://proteopedia.org/*",
+        "https://*.proteopedia.org/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["viewer.html"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ]
+}

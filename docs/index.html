@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PDB Peek: 3D previews for PDB IDs in papers</title>
+  <meta name="description" content="Free Chrome extension. Hover a PDB ID in a paper or on Wikipedia to see the protein structure in 3D with its method, resolution, organism and citation.">
+  <link rel="canonical" href="https://daniellachev.github.io/pdb-peek/">
+  <link rel="icon" href="img/icon.png">
+  <meta property="og:title" content="PDB Peek: 3D previews for PDB IDs in papers">
+  <meta property="og:description" content="Hover a PDB ID and see the structure in 3D. Free and open source.">
+  <meta property="og:image" content="https://daniellachev.github.io/pdb-peek/img/hover-card.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "PDB Peek",
+    "applicationCategory": "BrowserApplication",
+    "operatingSystem": "Chrome",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Hover a PDB ID in a paper or on Wikipedia to see the protein structure in 3D with its method, resolution, organism and citation.",
+    "author": { "@type": "Organization", "name": "Animiotics", "url": "https://animiotics.com/" },
+    "license": "https://opensource.org/licenses/MIT"
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #ffffff; --surface: #f3f7f8; --text: #10232a; --muted: #5a6d74;
+      --line: #dbe5e8; --accent: #007f9c; --accent-text: #ffffff;
+      color-scheme: light;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0c252f; --surface: #092934; --text: #e8f3f6; --muted: #9db4bb;
+        --line: #1d3d48; --accent: #1bbfe8; --accent-text: #05202a;
+        color-scheme: dark;
+      }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    main { max-width: 960px; margin: 0 auto; padding: 40px 16px 64px; }
+    header { display: flex; align-items: center; gap: 12px; }
+    header img { width: 44px; height: 44px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.15; margin: 28px 0 12px; }
+    h2 { font-size: 22px; margin: 48px 0 12px; }
+    .lead { font-size: 19px; color: var(--muted); max-width: 640px; margin: 0 0 24px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .button { display: inline-block; padding: 11px 18px; border-radius: 6px; border: 1px solid var(--accent); text-decoration: none; font-weight: 600; }
+    .button.primary { background: var(--accent); color: var(--accent-text); }
+    .button.secondary { color: var(--accent); }
+    figure { margin: 32px 0 0; }
+    figure img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 10px; display: block; }
+    figcaption { color: var(--muted); font-size: 14px; margin-top: 8px; }
+    ul { padding-left: 20px; }
+    li { margin: 6px 0; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+    .note { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; }
+    code { font-family: ui-monospace, Consolas, monospace; font-size: 0.92em; background: var(--surface); padding: 1px 5px; border-radius: 3px; }
+    a { color: var(--accent); }
+    footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <img src="img/icon.png" alt="" width="44" height="44">
+      <strong>PDB Peek</strong>
+    </header>
+
+    <h1>See any PDB entry in 3D without leaving the paper</h1>
+    <p class="lead">PDB Peek is a free Chrome extension. Hover a PDB ID in an article, on Wikipedia or on a lab page and a card shows the structure in 3D with its method, resolution, organism and citation.</p>
+    <div class="actions">
+      <a class="button primary" id="install" href="https://github.com/daniellachev/pdb-peek#install-from-source">Add to Chrome</a>
+      <a class="button secondary" href="https://github.com/daniellachev/pdb-peek">Source on GitHub</a>
+    </div>
+
+    <figure>
+      <img src="img/hover-card.webp" width="1280" height="800" alt="A hover card over the ID 1HHO in lecture notes, showing human oxyhaemoglobin in 3D with X-ray, 2.10 angstroms, 1983 and Homo sapiens">
+      <figcaption>Hovering "1HHO" in lecture notes.</figcaption>
+    </figure>
+
+    <h2>What it does</h2>
+    <ul>
+      <li>Finds PDB IDs written in text, such as "PDB: 1HHO", "PDB IDs 6VXX, 6VYB and 6VSB" and "doi:10.2210/pdb1tim/pdb". It also marks links to RCSB, PDBe, PDBj, NCBI Structure and Mol*.</li>
+      <li>Ignores look-alikes: "PDB 2023", "PDB2PQR" and "PDB file" are left alone.</li>
+      <li>Opens a full view with cartoon, stick and sphere styles, chains, ligands, the primary citation and PNG export.</li>
+      <li>Searches RCSB by ID or protein name from the toolbar button.</li>
+      <li>Works on selected text: right-click and choose "Peek at PDB entry".</li>
+    </ul>
+
+    <div class="grid">
+      <figure>
+        <img src="img/full-view.webp" width="1280" height="800" alt="Full view of 6VXX, the SARS-CoV-2 spike glycoprotein, with method, resolution, chains, ligands and citation">
+        <figcaption>Full view of 6VXX.</figcaption>
+      </figure>
+      <figure>
+        <img src="img/popup.webp" width="340" height="520" alt="The toolbar popup searching RCSB for hemoglobin">
+        <figcaption>Search by name or ID.</figcaption>
+      </figure>
+    </div>
+
+    <h2>Where it runs</h2>
+    <p>By default it runs on Wikipedia, PubMed, PMC, Europe PMC, RCSB, EBI, UniProt, bioRxiv, medRxiv, Proteopedia and the main journal sites. Turn on "Work on every website" in the popup to use it anywhere. Chrome asks for that permission separately and you can turn it off at any time.</p>
+
+    <h2>Privacy</h2>
+    <div class="note">
+      <p>PDB Peek collects nothing: no analytics, no account, no tracking. To show an entry it requests that entry's metadata and coordinates from the RCSB Protein Data Bank. <a href="privacy.html">Privacy policy</a>.</p>
+    </div>
+
+    <h2>Credits</h2>
+    <p>Structures and metadata come from the <a href="https://www.rcsb.org/">RCSB Protein Data Bank</a>. 3D rendering uses <a href="https://3dmol.org/">3Dmol.js</a> (BSD-3-Clause). PDB Peek is MIT licensed.</p>
+
+    <footer>
+      Made by <a href="https://animiotics.com/?utm_source=pdb_peek_site&amp;utm_medium=referral&amp;utm_campaign=pdb_peek">Animiotics</a>, which turns a written description into a 3D scientific animation built from PDB structures.
+    </footer>
+  </main>
+</body>
+</html>

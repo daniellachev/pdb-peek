@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PDB Peek</title>
+  <link rel="stylesheet" href="viewer.css">
+</head>
+<body>
+  <main class="peek">
+    <header class="peek-head">
+      <div class="peek-id-row">
+        <a class="peek-id" id="peek-id" target="_blank" rel="noopener"></a>
+        <span class="peek-method" id="peek-method"></span>
+        <button class="peek-close" id="peek-close" type="button" aria-label="Close preview">&times;</button>
+      </div>
+      <h1 class="peek-title" id="peek-title">Loading structure&hellip;</h1>
+      <p class="peek-meta" id="peek-meta"></p>
+    </header>
+
+    <section class="peek-stage">
+      <div class="peek-3d" id="peek-3d" aria-label="3D structure"></div>
+      <p class="peek-status" id="peek-status" role="status"></p>
+      <div class="peek-styles" id="peek-styles" role="group" aria-label="Display style">
+        <button type="button" data-style="cartoon" aria-pressed="true">Cartoon</button>
+        <button type="button" data-style="stick" aria-pressed="false">Sticks</button>
+        <button type="button" data-style="sphere" aria-pressed="false">Spheres</button>
+        <button type="button" id="peek-spin" aria-pressed="true">Spin</button>
+        <button type="button" id="peek-png">Save PNG</button>
+      </div>
+    </section>
+
+    <section class="peek-details" id="peek-details" hidden>
+      <dl id="peek-facts"></dl>
+      <p class="peek-citation" id="peek-citation"></p>
+    </section>
+
+    <nav class="peek-links" aria-label="Open elsewhere">
+      <button type="button" class="peek-full" id="peek-full">Full view</button>
+      <a id="link-rcsb" target="_blank" rel="noopener">RCSB</a>
+      <a id="link-pdbe" target="_blank" rel="noopener">PDBe</a>
+      <a id="link-molstar" target="_blank" rel="noopener">Mol*</a>
+    </nav>
+
+    <a class="peek-cta" id="peek-cta" target="_blank" rel="noopener">
+      <strong>Animate this structure</strong>
+      <span>Animiotics turns a written description into a 3D film built from PDB entries like this one.</span>
+    </a>
+  </main>
+  <script src="vendor/3Dmol-min.js"></script>
+  <script src="viewer.js"></script>
+</body>
+</html>

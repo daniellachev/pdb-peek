@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PDB Peek</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main>
+    <header>
+      <img src="icons/icon-32.png" width="22" height="22" alt="">
+      <h1>PDB Peek</h1>
+    </header>
+
+    <form id="search">
+      <label for="query">PDB ID or protein name</label>
+      <div class="row">
+        <input id="query" name="query" autocomplete="off" spellcheck="false" placeholder="1HHO or hemoglobin" required>
+        <button type="submit">Peek</button>
+      </div>
+    </form>
+    <p class="status" id="status" role="status"></p>
+    <ol class="results" id="results"></ol>
+
+    <section class="settings">
+      <label class="toggle">
+        <input type="checkbox" id="enabled">
+        <span>Highlight PDB IDs on pages</span>
+      </label>
+      <label class="toggle">
+        <input type="checkbox" id="all-sites">
+        <span>Work on every website, not only journals and Wikipedia</span>
+      </label>
+    </section>
+
+    <footer>
+      <a id="made-by" target="_blank" rel="noopener">Free from Animiotics</a>
+      <span>Structures from RCSB PDB</span>
+    </footer>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>
